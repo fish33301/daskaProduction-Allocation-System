@@ -15,7 +15,12 @@
             --mono: 'DM Mono', monospace; --jp: 'Noto Sans JP', sans-serif; --display: 'Bebas Neue', sans-serif;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: var(--jp); background: var(--paper); color: var(--ink); min-height: 100vh; zoom: 1.3; }
+        body { font-family: var(--jp); background: var(--paper); color: var(--ink); min-height: 100vh; zoom: 1.3; transition: background 0.25s; }
+        body.brand-des { background: #eaf2f7; }
+        body.brand-des .card { background: #f5fafd; }
+        body.brand-des .stock-item, body.brand-des .ref-item, body.brand-des .ing-check, body.brand-des .custom-builder, body.brand-des .custom-input, body.brand-des .qty-input, body.brand-des .prio-select, body.brand-des .custom-item {
+            background: #fff;
+        }
 
         .header { background: var(--ink); color: var(--paper); padding: 22px 40px 18px; display: flex; align-items: flex-end; justify-content: space-between; border-bottom: 4px solid var(--accent); }
         .header-label { font-family: var(--mono); font-size: 10px; letter-spacing: 3px; color: var(--warm-mid); margin-bottom: 4px; }
@@ -23,9 +28,11 @@
         .header-title span { color: var(--accent); }
         .header-stamp { font-family: var(--display); font-size: 64px; color: rgba(255,255,255,0.04); }
         .brand-switch { display: flex; border: 1px solid #444; border-radius: 2px; overflow: hidden; }
-        .brand-btn { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 1px; padding: 5px 14px; background: transparent; border: none; color: #888; cursor: pointer; transition: all 0.15s; }
+        .brand-btn { font-family: var(--mono); font-size: 15px; font-weight: 700; letter-spacing: 1px; padding: 7px 18px; background: transparent; border: none; color: #888; cursor: pointer; transition: all 0.15s; }
         .brand-btn:not(:last-child) { border-right: 1px solid #444; }
-        .brand-btn.active { background: var(--accent); color: #fff; }
+        .brand-btn.active { color: #fff; }
+        .brand-btn#brand-btn-lf.active { background: var(--accent); }
+        .brand-btn#brand-btn-des.active { background: var(--blue); }
         .brand-btn:not(.active):hover { color: var(--paper); }
 
         .page { max-width: 1400px; margin: 0 auto; padding: 24px 32px 60px; display: grid; grid-template-columns: 1fr 380px; gap: 22px; }
@@ -273,8 +280,8 @@
         <div class="header-stamp" id="header-stamp" style="line-height:1;">LF</div>
         <div style="display:flex;align-items:center;gap:10px;">
             <div class="brand-switch" id="brand-switch">
-                <button class="brand-btn active" id="brand-btn-lf" onclick="switchBrand('lf')">LF</button>
                 <button class="brand-btn" id="brand-btn-des" onclick="switchBrand('des')">DES</button>
+                <button class="brand-btn active" id="brand-btn-lf" onclick="switchBrand('lf')">LF</button>
             </div>
             <span style="font-family:var(--mono);font-size:9px;color:#555;letter-spacing:1px;">// AUTO-SAVE ON</span>
             <button onclick="clearState()" style="font-family:var(--mono);font-size:10px;padding:5px 10px;background:transparent;border:1px solid #444;color:#888;border-radius:2px;cursor:pointer;letter-spacing:1px;" onmouseover="this.style.borderColor='#b5451b';this.style.color='#b5451b'" onmouseout="this.style.borderColor='#444';this.style.color='#888'">↺ RESET</button>
@@ -674,6 +681,7 @@ function switchBrand(brand) {
         ? 'LF <span>.</span> 分配'
         : 'DES <span>.</span> 分配';
     document.getElementById('header-stamp').textContent = brand === 'lf' ? 'LF' : 'DES';
+    document.body.classList.toggle('brand-des', brand === 'des');
 }
 
 function toggleCardCollapse(brand) {
