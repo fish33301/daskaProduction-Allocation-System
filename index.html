@@ -31,6 +31,47 @@
         .page { max-width: 1400px; margin: 0 auto; padding: 24px 32px 60px; display: grid; grid-template-columns: 1fr 380px; gap: 22px; }
         @media (max-width: 1000px) { .page { grid-template-columns: 1fr; padding: 14px; } }
 
+        /* 手機版：商品設定表格改為卡片式排列 */
+        @media (max-width: 640px) {
+            .prod-table { table-layout: auto; }
+            .prod-table thead { display: none; }
+            .prod-table, .prod-table tbody, .prod-table tr, .prod-table td { display: block; width: 100% !important; }
+            .prod-table tr {
+                border: 1px solid var(--border);
+                border-radius: 4px;
+                margin-bottom: 12px;
+                padding: 10px 12px;
+                background: var(--card);
+            }
+            .prod-table td {
+                padding: 6px 0;
+                border: none;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 10px;
+            }
+            .prod-table td[data-label]::before {
+                content: attr(data-label);
+                font-family: var(--mono);
+                font-size: 10px;
+                letter-spacing: 1px;
+                color: #888;
+                flex-shrink: 0;
+                min-width: 56px;
+            }
+            .prod-table td[data-label="商品名稱"] {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+                border-bottom: 1px solid var(--border);
+                padding-bottom: 10px;
+                margin-bottom: 6px;
+            }
+            .prod-table td[data-label="商品名稱"]::before { display: none; }
+            .prod-table td input, .prod-table td select { max-width: 140px; }
+        }
+
         .card { background: var(--card); border: 1px solid var(--border); border-radius: 3px; margin-bottom: 18px; overflow: hidden; }
         .card-head { padding: 11px 16px; background: var(--ink); color: var(--paper); display: flex; align-items: center; gap: 10px; border-bottom: 3px solid var(--accent); }
         .card-head-num { font-family: var(--display); font-size: 24px; color: var(--accent); line-height: 1; }
@@ -954,18 +995,18 @@ function initTable(brand) {
         let opts = Array.from({length:15},(_,i)=>`<option value="${i+1}">第 ${i+1}</option>`).join('');
         opts += `<option value="skip" selected>🚫 不生産</option>`;
         return `<tr>
-            <td><div class="prod-name">${p.name}</div><div class="prod-recipe">${recipeStr}</div>${recipeImgsHtml}</td>
-            <td>
+            <td data-label="商品名稱"><div class="prod-name">${p.name}</div><div class="prod-recipe">${recipeStr}</div>${recipeImgsHtml}</td>
+            <td data-label="售價">
                 <input type="number" class="qty-input prod-price-input" id="price-${p.id}-${brand}" value="${p.price || ''}" placeholder="0" min="0"
                     onchange="updateProductPrice('${p.id}', '${brand}', this.value)">
                 <div class="prod-cost" id="cost-${p.id}-${brand}">${hasAllPrices ? '成本¥'+costTotal.toLocaleString() : '成本未知'}</div>
             </td>
-            <td>
+            <td data-label="箱規">
                 <input type="number" class="qty-input prod-box-input" id="box-${p.id}-${brand}" value="${p.boxSize || 1}" placeholder="1" min="1"
                     onchange="updateProductBoxSize('${p.id}', '${brand}', this.value)">
             </td>
-            <td><input type="number" id="fixed-${p.id}-${brand}" class="qty-input" placeholder="自動" min="0"></td>
-            <td><select id="prio-${p.id}-${brand}" class="prio-select skip-mode" onchange="updateSelectStyle('${p.id}', '${brand}')">${opts}</select></td>
+            <td data-label="指定量"><input type="number" id="fixed-${p.id}-${brand}" class="qty-input" placeholder="自動" min="0"></td>
+            <td data-label="優先度"><select id="prio-${p.id}-${brand}" class="prio-select skip-mode" onchange="updateSelectStyle('${p.id}', '${brand}')">${opts}</select></td>
         </tr>`;
     }).join('');
 }
