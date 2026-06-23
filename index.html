@@ -365,7 +365,7 @@
                             <tr>
                                 <th>商品名稱</th>
                                 <th>售價</th>
-                                <th>箱規</th>
+                                <th>裝箱數量</th>
                                 <th>指定量</th>
                                 <th>優先度</th>
                             </tr>
@@ -392,7 +392,7 @@
                                 <input type="number" id="custom-price-lf" class="custom-input" placeholder="0" min="0">
                             </div>
                             <div>
-                                <div class="custom-label">箱規</div>
+                                <div class="custom-label">裝箱數量</div>
                                 <input type="number" id="custom-box-lf" class="custom-input" placeholder="1" min="1" value="1">
                             </div>
                             <div>
@@ -518,7 +518,7 @@
                             <tr>
                                 <th>商品名稱</th>
                                 <th>售價</th>
-                                <th>箱規</th>
+                                <th>裝箱數量</th>
                                 <th>指定量</th>
                                 <th>優先度</th>
                             </tr>
@@ -545,7 +545,7 @@
                                 <input type="number" id="custom-price-des" class="custom-input" placeholder="0" min="0">
                             </div>
                             <div>
-                                <div class="custom-label">箱規</div>
+                                <div class="custom-label">裝箱數量</div>
                                 <input type="number" id="custom-box-des" class="custom-input" placeholder="1" min="1" value="1">
                             </div>
                             <div>
@@ -671,7 +671,7 @@
                             <tr>
                                 <th>商品名稱</th>
                                 <th>售價</th>
-                                <th>箱規</th>
+                                <th>裝箱數量</th>
                                 <th>指定量</th>
                                 <th>優先度</th>
                             </tr>
@@ -698,7 +698,7 @@
                                 <input type="number" id="custom-price-yt" class="custom-input" placeholder="0" min="0">
                             </div>
                             <div>
-                                <div class="custom-label">箱規</div>
+                                <div class="custom-label">裝箱數量</div>
                                 <input type="number" id="custom-box-yt" class="custom-input" placeholder="1" min="1" value="1">
                             </div>
                             <div>
@@ -1225,7 +1225,7 @@ function initTable(brand) {
                     onchange="updateProductPrice('${p.id}', '${brand}', this.value)">
                 <div class="prod-cost" id="cost-${p.id}-${brand}">${hasAllPrices ? '成本¥'+costTotal.toLocaleString() : '成本未知'}</div>
             </td>
-            <td data-label="箱規">
+            <td data-label="裝箱數量">
                 <input type="number" class="qty-input prod-box-input" id="box-${p.id}-${brand}" value="${p.boxSize || 1}" placeholder="1" min="1"
                     onchange="updateProductBoxSize('${p.id}', '${brand}', this.value)">
             </td>
@@ -1363,7 +1363,7 @@ function renderHistoryModal() {
                 <span class="history-item-time">${h.date} ${h.time}</span>
             </div>
             <div class="history-item-recipe">${recipeStr}</div>
-            <div class="history-item-meta">箱規:${h.boxSize} 售價:${h.price>0?'¥'+h.price:'—'} ${costStr} ${fixedStr} 優先度:第${h.priority}</div>
+            <div class="history-item-meta">裝箱數量:${h.boxSize} 售價:${h.price>0?'¥'+h.price:'—'} ${costStr} ${fixedStr} 優先度:第${h.priority}</div>
         </div>`;
     }).join('');
 
@@ -1434,7 +1434,7 @@ function renderCustomList(brand) {
         return `<div class="custom-item">
             <div class="custom-item-main">
                 <div style="flex:1;">
-                    <div class="custom-item-name">✏️ ${p.name} <span style="font-family:var(--mono);font-size:9px;color:#999;">箱規:${p.boxSize} 售價:${p.price>0?'¥'+p.price:'—'} ${costStr}${profitStr}</span></div>
+                    <div class="custom-item-name">✏️ ${p.name} <span style="font-family:var(--mono);font-size:9px;color:#999;">裝箱數量:${p.boxSize} 售價:${p.price>0?'¥'+p.price:'—'} ${costStr}${profitStr}</span></div>
                     <div class="custom-item-visual">
                         ${recipeImgsHtml}
                         ${indexGridHtml}
