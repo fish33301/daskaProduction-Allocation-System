@@ -72,6 +72,8 @@
         .prod-table td { padding: 7px 8px; vertical-align: middle; }
         .prod-name { font-size: 13px; font-weight: 700; }
         .prod-recipe { font-family: var(--mono); font-size: 9px; color: #999; margin-top: 2px; line-height: 1.6; }
+        .prod-recipe-imgs { display: grid; gap: 2px; margin-top: 4px; width: max-content; }
+        .prod-recipe-imgs img { width: 18px; height: 18px; border-radius: 2px; object-fit: cover; border: 1px solid var(--border); display: block; }
         .prod-price { font-family: var(--mono); font-size: 11px; color: var(--gold); }
 
         .qty-input { width: 65px; padding: 4px 6px; font-family: var(--mono); font-size: 12px; background: #fff; border: 1px solid var(--border); border-radius: 2px; text-align: center; color: var(--ink); outline: none; }
@@ -514,21 +516,21 @@ const BRAND_DATA = {
         validIngredients: [1,2,3,5,6,7,9,10,11,12,13,14,15,16,17,18,23,24,25,26],
         imgPrefix: 'lf',
         products: [
-            { id:'lf2',  name:'LF 2',  price:0, boxSize:1, req:{17:1,9:1} },
-            { id:'lf3',  name:'LF 3',  price:0, boxSize:1, req:{17:1,9:1,6:1} },
-            { id:'lf4',  name:'LF 4',  price:0, boxSize:1, req:{17:1,9:1,1:1,16:1} },
-            { id:'lf5',  name:'LF 5',  price:0, boxSize:1, req:{17:1,9:1,18:1,2:1,26:1} },
-            { id:'lf6',  name:'LF 6',  price:0, boxSize:1, req:{17:1,9:1,10:1,7:1,6:1,16:1} },
-            { id:'lf8',  name:'LF 8',  price:0, boxSize:1, req:{17:1,9:1,7:1,1:1,2:1,14:1,11:1,18:1} },
-            { id:'lf9',  name:'LF 9',  price:0, boxSize:1, req:{17:1,9:1,13:1,5:1,18:1,15:1,7:1,12:1,3:1} },
-            { id:'lf10', name:'LF 10', price:0, boxSize:1, req:{17:1,9:1,16:1,1:1,7:1,3:1,25:1,10:1,12:1,14:1} },
-            { id:'lf12', name:'LF 12', price:0, boxSize:1, req:{17:1,9:1,3:1,24:1,18:1,14:1,1:1,2:1,7:1,12:1,23:1,13:1} },
-            { id:'lf15', name:'LF 15', price:0, boxSize:1, req:{17:1,9:1,14:1,11:1,3:1,1:1,16:1,7:1,2:1,18:1,25:1,13:1,12:1,23:1,10:1} },
-            { id:'lf20', name:'LF 20', price:0, boxSize:1, req:{17:1,9:1,26:1,13:1,14:1,3:1,6:1,10:1,25:1,7:1,18:1,24:1,12:1,11:1,2:1,1:1,23:1,15:1,5:1,16:1} },
-            { id:'lft3', name:'LFT 3', price:0, boxSize:1, req:{17:2,26:1} },
-            { id:'lft5', name:'LFT 5', price:0, boxSize:1, req:{17:3,10:1,23:1} },
-            { id:'lft6', name:'LFT 6', price:0, boxSize:1, req:{17:3,9:1,1:1,3:1} },
-            { id:'lft8', name:'LFT 8', price:0, boxSize:1, req:{17:4,9:1,7:1,10:1,16:1} },
+            { id:'lf2',  name:'LF 2',  price:0, boxSize:1, req:{17:1,9:1}, reqOrder:[17,9] },
+            { id:'lf3',  name:'LF 3',  price:0, boxSize:1, req:{17:1,9:1,6:1}, reqOrder:[17,9,6] },
+            { id:'lf4',  name:'LF 4',  price:0, boxSize:1, req:{17:1,9:1,1:1,16:1}, reqOrder:[1,9,17,16] },
+            { id:'lf5',  name:'LF 5',  price:0, boxSize:1, req:{17:1,9:1,18:1,2:1,26:1}, reqOrder:[17,18,9,2,26] },
+            { id:'lf6',  name:'LF 6',  price:0, boxSize:1, req:{17:1,9:1,10:1,7:1,6:1,16:1}, reqOrder:[7,9,10,17,6,16] },
+            { id:'lf8',  name:'LF 8',  price:0, boxSize:1, req:{17:1,9:1,7:1,1:1,2:1,14:1,11:1,18:1}, reqOrder:[7,1,9,2,14,11,18,17] },
+            { id:'lf9',  name:'LF 9',  price:0, boxSize:1, req:{17:1,9:1,13:1,5:1,18:1,15:1,7:1,12:1,3:1}, reqOrder:[13,5,18,15,9,12,17,7,3] },
+            { id:'lf10', name:'LF 10', price:0, boxSize:1, req:{17:1,9:1,16:1,1:1,7:1,3:1,25:1,10:1,12:1,14:1}, reqOrder:[16,1,9,7,3,25,10,12,14,17] },
+            { id:'lf12', name:'LF 12', price:0, boxSize:1, req:{17:1,9:1,3:1,24:1,18:1,14:1,1:1,2:1,7:1,12:1,23:1,13:1}, reqOrder:[3,24,18,14,1,2,9,7,17,12,23,13] },
+            { id:'lf15', name:'LF 15', price:0, boxSize:1, req:{17:1,9:1,14:1,11:1,3:1,1:1,16:1,7:1,2:1,18:1,25:1,13:1,12:1,23:1,10:1}, reqOrder:[14,11,3,1,16,7,2,9,18,25,13,23,12,17,10] },
+            { id:'lf20', name:'LF 20', price:0, boxSize:1, req:{17:1,9:1,26:1,13:1,14:1,3:1,6:1,10:1,25:1,7:1,18:1,24:1,12:1,11:1,2:1,1:1,23:1,15:1,5:1,16:1}, reqOrder:[26,13,14,3,6,10,25,9,7,18,24,12,11,2,1,23,17,15,5,16] },
+            { id:'lft3', name:'LFT 3', price:0, boxSize:1, req:{17:2,26:1}, reqOrder:[17,26,17] },
+            { id:'lft5', name:'LFT 5', price:0, boxSize:1, req:{17:3,10:1,23:1}, reqOrder:[17,10,17,23,17] },
+            { id:'lft6', name:'LFT 6', price:0, boxSize:1, req:{17:3,9:1,1:1,3:1}, reqOrder:[1,9,3,17,17,17] },
+            { id:'lft8', name:'LFT 8', price:0, boxSize:1, req:{17:4,9:1,7:1,10:1,16:1}, reqOrder:[16,7,9,10,17,17,17,17] },
         ],
         customProducts: [],
         customIdCounter: 0,
@@ -616,8 +618,13 @@ function calcComboGrid(n) {
         const cols = Math.ceil(n / rows);
         if (cols > 5) continue;
         const waste = rows * cols - n;
-        if (!best || waste < best.waste || (waste === best.waste && cols > best.cols)) {
-            best = { rows, cols, waste };
+        const squareness = Math.abs(cols - rows);
+        if (!best ||
+            waste < best.waste ||
+            (waste === best.waste && squareness < best.squareness) ||
+            (waste === best.waste && squareness === best.squareness && cols > best.cols)
+        ) {
+            best = { rows, cols, waste, squareness };
         }
     }
     return best || { cols: n, rows: 1 };
@@ -812,16 +819,23 @@ function toggleRefGrid(brand) {
 function initTable(brand) {
     const tbody = document.getElementById(`prod-list-body-${brand}`);
     const products = BRAND_DATA[brand].products;
+    const prefix = BRAND_DATA[brand].imgPrefix;
     if (products.length === 0) {
         tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:#aaa;font-family:var(--mono);font-size:11px;padding:14px 0;">// 尚無預設商品，請在「自訂商品」分頁新增</td></tr>`;
         return;
     }
     tbody.innerHTML = products.map(p => {
         const recipeStr = Object.entries(p.req).map(([k,v])=>`#${k}×${v}`).join(' ');
+        const order = p.reqOrder || Object.entries(p.req).flatMap(([ing,qty]) => Array(qty).fill(Number(ing)));
+        const recipeImgs = order.map(ing => {
+            const src = IMG_MAP[`${prefix}-${String(ing).padStart(2,'0')}`] || '';
+            return src ? `<img src="${src}" alt="#${ing}">` : '';
+        }).join('');
+        const { cols } = calcComboGrid(order.length);
         let opts = Array.from({length:15},(_,i)=>`<option value="${i+1}">第 ${i+1}</option>`).join('');
         opts += `<option value="skip" selected>🚫 不生産</option>`;
         return `<tr>
-            <td><div class="prod-name">${p.name}</div><div class="prod-recipe">${recipeStr}</div></td>
+            <td><div class="prod-name">${p.name}</div><div class="prod-recipe">${recipeStr}</div><div class="prod-recipe-imgs" style="grid-template-columns:repeat(${cols},18px);">${recipeImgs}</div></td>
             <td><span class="prod-price">${p.price>0?'¥'+p.price.toLocaleString():'—'}</span></td>
             <td style="font-family:var(--mono);font-size:11px;color:var(--ok);">${p.boxSize}個/箱</td>
             <td><input type="number" id="fixed-${p.id}-${brand}" class="qty-input" placeholder="自動" min="0"></td>
