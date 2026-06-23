@@ -907,8 +907,7 @@ function reorderComboByDrag(srcIng, targetIng, brand) {
     const fromIdx = data.comboOrder.indexOf(srcIng);
     const toIdx = data.comboOrder.indexOf(targetIng);
     if (fromIdx === -1 || toIdx === -1) return;
-    data.comboOrder.splice(fromIdx, 1);
-    data.comboOrder.splice(toIdx, 0, srcIng);
+    [data.comboOrder[fromIdx], data.comboOrder[toIdx]] = [data.comboOrder[toIdx], data.comboOrder[fromIdx]];
     renderComboPreview(brand);
 }
 
