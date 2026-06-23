@@ -80,9 +80,10 @@
         .custom-input { padding: 5px 7px; font-family: var(--mono); font-size: 12px; background: #fff; border: 1px solid var(--border); border-radius: 2px; color: var(--ink); outline: none; width: 100%; }
         .custom-input:focus { border-color: var(--accent); }
         .ing-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 5px; margin: 10px 0; }
-        .combo-preview { display: flex; align-items: flex-start; gap: 10px; padding: 10px; background: #fff; border: 1px solid var(--border); border-radius: 2px; margin-bottom: 10px; flex-wrap: wrap; }
+        .combo-preview { display: flex; flex-direction: column; gap: 8px; padding: 10px; background: #fff; border: 1px solid var(--border); border-radius: 2px; margin-bottom: 10px; }
+        .combo-preview-header { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
         .combo-preview-label { font-family: var(--mono); font-size: 9px; letter-spacing: 1.5px; color: #999; text-transform: uppercase; flex-shrink: 0; padding-top: 4px; }
-        .combo-preview-grid { display: grid; gap: 4px; flex: 1; min-width: 0; justify-content: start; }
+        .combo-preview-grid { display: grid; gap: 4px; width: 100%; justify-content: start; }
         .combo-cell-wrap { display: flex; flex-direction: column; align-items: center; gap: 1px; cursor: grab; touch-action: none; user-select: none; }
         .combo-cell-wrap.dragging { opacity: 0.4; }
         .combo-cell-wrap.drag-over .combo-cell { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent) inset; }
@@ -297,9 +298,11 @@
                             </div>
                         </div>
                         <div class="combo-preview">
-                            <span class="combo-preview-label">組合預覽</span>
+                            <div class="combo-preview-header">
+                                <span class="combo-preview-label">組合預覽</span>
+                                <span class="combo-preview-count" id="combo-preview-count-lf">尚未選擇原料</span>
+                            </div>
                             <div class="combo-preview-grid" id="combo-preview-grid-lf"></div>
-                            <span class="combo-preview-count" id="combo-preview-count-lf">尚未選擇原料</span>
                         </div>
                         <div class="custom-label" style="margin-bottom:6px;">選擇原料（勾選後可輸入數量）：</div>
                         <div class="ing-grid" id="ing-grid-lf"></div>
@@ -439,9 +442,11 @@
                             </div>
                         </div>
                         <div class="combo-preview">
-                            <span class="combo-preview-label">組合預覽</span>
+                            <div class="combo-preview-header">
+                                <span class="combo-preview-label">組合預覽</span>
+                                <span class="combo-preview-count" id="combo-preview-count-des">尚未選擇原料</span>
+                            </div>
                             <div class="combo-preview-grid" id="combo-preview-grid-des"></div>
-                            <span class="combo-preview-count" id="combo-preview-count-des">尚未選擇原料</span>
                         </div>
                         <div class="custom-label" style="margin-bottom:6px;">選擇原料（勾選後可輸入數量）：</div>
                         <div class="ing-grid" id="ing-grid-des"></div>
