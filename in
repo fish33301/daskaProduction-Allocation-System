@@ -43,6 +43,14 @@
         .stock-item { background: var(--cream); border: 1px solid var(--border); border-radius: 2px; padding: 7px 9px; transition: border-color 0.15s; display: flex; gap: 7px; align-items: center; }
         .stock-item:focus-within { border-color: var(--accent); }
         .stock-thumb { width: 30px; height: 30px; border-radius: 2px; object-fit: cover; border: 1px solid var(--border); flex-shrink: 0; background: #fff; }
+        .ref-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: 6px; margin-bottom: 14px; }
+        .ref-item { background: var(--cream); border: 1px solid var(--border); border-radius: 2px; padding: 5px; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+        .ref-thumb { width: 40px; height: 40px; border-radius: 2px; object-fit: cover; border: 1px solid var(--border); background: #fff; }
+        .ref-num { font-family: var(--mono); font-size: 9px; font-weight: 700; color: var(--accent); }
+        .ref-toggle { display: flex; align-items: center; justify-content: space-between; cursor: pointer; margin-bottom: 8px; padding: 4px 0; }
+        .ref-toggle-label { font-family: var(--mono); font-size: 10px; color: #888; letter-spacing: 1px; }
+        .ref-toggle-arrow { font-size: 10px; color: #888; transition: transform 0.15s; }
+        .ref-toggle.open .ref-toggle-arrow { transform: rotate(90deg); }
         .stock-main { flex: 1; min-width: 0; }
         .stock-num { font-family: var(--mono); font-size: 10px; font-weight: 700; color: var(--accent); }
         .stock-input { width: 100%; background: transparent; border: none; border-bottom: 2px solid var(--border); font-family: var(--mono); font-size: 17px; font-weight: 500; color: var(--ink); padding: 2px 0; outline: none; transition: border-color 0.15s; }
@@ -239,6 +247,11 @@
 
                 <!-- Preset Tab -->
                 <div id="tab-preset-lf">
+                    <div class="ref-toggle" onclick="toggleRefGrid('lf')">
+                        <span class="ref-toggle-label">📋 原料編號對照表（點擊展開/收合）</span>
+                        <span class="ref-toggle-arrow" id="ref-arrow-lf">▶</span>
+                    </div>
+                    <div class="ref-grid" id="ref-grid-lf" style="display:none;"></div>
                     <p class="hint-text">// 指定數量留空 → 系統自動分配。填入數字 → 優先固定生産，剩餘再自動分配。</p>
                     <table class="prod-table">
                         <thead>
@@ -383,6 +396,11 @@
 
                 <!-- Preset Tab -->
                 <div id="tab-preset-des">
+                    <div class="ref-toggle" onclick="toggleRefGrid('des')">
+                        <span class="ref-toggle-label">📋 原料編號對照表（點擊展開/收合）</span>
+                        <span class="ref-toggle-arrow" id="ref-arrow-des">▶</span>
+                    </div>
+                    <div class="ref-grid" id="ref-grid-des" style="display:none;"></div>
                     <p class="hint-text">// 指定數量留空 → 系統自動分配。填入數字 → 優先固定生産，剩餘再自動分配。</p>
                     <table class="prod-table">
                         <thead>
@@ -766,6 +784,29 @@ function recheckAllIngStock(brand) {
 // 自動為所有原料上色
 function autoColorIngGrid(brand) {
     BRAND_DATA[brand].validIngredients.forEach(i => colorIngStock(i, brand));
+}
+
+// 商品設定頁面上方的原料編號對照表（純顯示，無輸入欄）
+function initRefGrid(brand) {
+    const grid = document.getElementById(`ref-grid-${brand}`);
+    if (!grid) return;
+    const data = BRAND_DATA[brand];
+    const prefix = data.imgPrefix;
+    grid.innerHTML = data.validIngredients.map(i => {
+        const src = IMG_MAP[`${prefix}-${String(i).padStart(2,'0')}`] || '';
+        const thumb = src ? `<img class="ref-thumb" src="${src}" alt="#${i}">` : '<div class="ref-thumb"></div>';
+        return `<div class="ref-item">${thumb}<div class="ref-num">#${i}</div></div>`;
+    }).join('');
+}
+
+function toggleRefGrid(brand) {
+    const grid = document.getElementById(`ref-grid-${brand}`);
+    const toggle = grid.previousElementSibling;
+    const arrow = document.getElementById(`ref-arrow-${brand}`);
+    const isOpen = grid.style.display !== 'none';
+    grid.style.display = isOpen ? 'none' : 'grid';
+    arrow.textContent = isOpen ? '▶' : '▼';
+    toggle.classList.toggle('open', !isOpen);
 }
 
 function initTable(brand) {
@@ -1170,6 +1211,7 @@ document.addEventListener('input', saveState);
     initStock(brand);
     initIngGrid(brand);
     initTable(brand);
+    initRefGrid(brand);
     renderComboPreview(brand);
 });
 loadState();
